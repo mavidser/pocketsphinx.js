@@ -65,6 +65,7 @@ namespace pocketsphinxjs {
     Recognizer(const Config&);
     ReturnType reInit(const Config&);
     ReturnType addWords(const std::vector<Word>&);
+    ReturnType addJSGFGrammar(Integers&, const std::string&);
     ReturnType addGrammar(Integers&, const Grammar&);
     ReturnType addKeyword(Integers&, const std::string&);
     // Kept for backward compatibility, use switchSearch
@@ -184,6 +185,7 @@ EMSCRIPTEN_BINDINGS(recognizer) {
     .constructor<const ps::Config&>()
     .function("reInit", &ps::Recognizer::reInit)
     .function("addWords", &ps::Recognizer::addWords)
+    .function("addJSGFGrammar", &ps::Recognizer::addJSGFGrammar)
     .function("addGrammar", &ps::Recognizer::addGrammar)
     .function("addKeyword", &ps::Recognizer::addKeyword)
     .function("switchGrammar", &ps::Recognizer::switchGrammar)

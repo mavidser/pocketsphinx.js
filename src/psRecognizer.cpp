@@ -36,6 +36,24 @@ namespace pocketsphinxjs {
     return SUCCESS;
   }
 
+  ReturnType Recognizer::addJSGFGrammar(Integers& id, const std::string& data) {
+    if (decoder == NULL) return BAD_STATE;
+    std::ostringstream grammar_name;
+    grammar_name << grammar_index;
+    grammar_names.push_back(grammar_name.str());
+    if(ps_set_jsgf_string(decoder, grammar_names.back().c_str(), data.c_str())) {
+      return RUNTIME_ERROR;
+    }
+    if (id.size() == 0) id.push_back(grammar_index);
+    else id.at(0) = grammar_index;
+    grammar_index++;
+    // We switch to the newly added grammar right away
+    if (ps_set_search(decoder, grammar_names.back().c_str())) {
+      return RUNTIME_ERROR;
+    }
+    return SUCCESS;
+  }
+
   ReturnType Recognizer::addGrammar(Integers& id, const Grammar& grammar) {
     if (decoder == NULL) return BAD_STATE;
     std::ostringstream grammar_name;
